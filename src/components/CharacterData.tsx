@@ -48,23 +48,27 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
   };
 
   function handleClickRemoveCard() {
+    const removeCountAux = removeCount + 1;
     setRemoveCount(removeCount + 1);
-    setData(data + 20);
-    escalado();
-
-  };
-
-  function escalado(){
-    if (removeCount == 2){
-      setData(data + 10);
-    }else if (removeCount == 3){
-      setData(data + 30);
-    }else if (removeCount == 4){
-      setData(data + 50);
-    }else if (removeCount >= 5){
-      setData(data + 70);
+    setData((data) =>data + 20);
+    if (removeCountAux == 2){
+      setData((data) => data + 10);
+    }else if (removeCountAux == 3){
+      setData((data) => data + 30);
+    }else if (removeCountAux == 4){
+      setData((data) => data + 50);
+    }else if (removeCountAux >= 5){
+      setData((data) => data + 70);
     }
   };
+  /*
+  1: 20
+  2: 50
+  3: 100
+  4: 170
+  5: 260
+  */
+
 
   return (
     <div className="flex flex-col max-w-[24.1%] gap-y-2" ref={containerRef}>
