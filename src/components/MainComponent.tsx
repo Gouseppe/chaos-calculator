@@ -75,7 +75,7 @@ export const MainComponent = () => {
     if (!container) return;
     // prevenir scroll vertical de la página mientras el cursor esté sobre el carrusel
     e.preventDefault();
-    const factor = 1.6; // ajustar sensibilidad si hace falta
+    const factor = 1.7; // ajustar sensibilidad si hace falta
     const delta = e.deltaY * factor;
     container.scrollBy({ left: delta, behavior: "smooth" });
   };
@@ -156,7 +156,11 @@ export const MainComponent = () => {
           </button>
         </div>
       </div>
-      <CharacterData maxData={data} />
+      <div className="flex flex-row">
+        <CharacterData maxData={data} />
+        <CharacterData maxData={data} />
+        <CharacterData maxData={data} />
+      </div>
     </div>
   );
 };

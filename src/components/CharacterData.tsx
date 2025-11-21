@@ -1,6 +1,7 @@
 import { set } from "astro:schema";
-import { useState, useRef, useEffect } from "react";
-import {NeutralCalculate} from "./NeutralCalculate";
+import { useState, useRef, useEffect, use } from "react";
+import { NeutralCalculate } from "./NeutralCalculate";
+import { UseResetIntenso } from "../hooks/UseResetIntenso";
 
 // ...existing code...
 type Props = {
@@ -10,8 +11,29 @@ type Props = {
 const Characters = ["Amir", "Beryl", "Cassius", "Veronica"];
 
 export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
+  const {
+    reset: resetIntenso,
+    neutralDivineArray,
+    setNeutralDivineArray,
+    neutralActiveDivine,
+    setNeutralActiveDivine,
+    neutralEpiphanyArray,
+    setNeutralEpiphanyArray,
+    neutralActiveEpiphany,
+    setNeutralActiveEpiphany,
+    monsterArray,
+    setMonsterArray,
+    monsterCount,
+    setMonsterCount,
+    forbidden,
+    setForbidden,
+    forbiddenCount,
+    setForbiddenCount,
+  } = UseResetIntenso();
   const [character, setCharacter] = useState("");
-  const [cardsArray, setCardsArray] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7]);
+  const [cardsArray, setCardsArray] = useState<number[]>([
+    0, 1, 2, 3, 4, 5, 6, 7,
+  ]);
   const [data, setData] = useState(0);
   const [neutralCount, setNeutralCount] = useState(0);
   const [ArrayNeutralCard, setArrayNeutralCard] = useState<number[]>([]);
@@ -23,6 +45,14 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
   const [activeDivine, setActiveDivine] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // useEffect(() => {
+  //   console.log(
+  //     "forbidden desde character",
+  //     forbidden,
+  //     "forbiddenCount",
+  //     forbiddenCount
+  //   );
+  // }, [forbiddenCount, forbidden]);
   // Cerrar dropdown al hacer clic fuera o presionar Escape
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -53,9 +83,9 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
     setDivineArray([]);
     setActiveDivine([]);
     setCardsArray([0, 1, 2, 3, 4, 5, 6, 7]);
-  };
-
-
+    setArrayNeutralCard([]);
+    resetIntenso();
+  }
 
   function handleClickRemoveCard() {
     const removeCountAux = removeCount + 1;
@@ -70,7 +100,7 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
     } else if (removeCountAux >= 5) {
       setData((data) => data + 70);
     }
-  };
+  }
 
   function saveRemoveCard(index: number) {
     setArrayRemoveCard([...arrayRemoveCard, index]);
@@ -81,7 +111,7 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
       const newDivineArray = divineArray.filter((i) => i !== index);
       setDivineArray(newDivineArray);
     }
-  };
+  }
   /*
   1: 20 
   2: 50
@@ -93,7 +123,7 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
     setData((data) => data + 30);
     setNeutralCount(neutralCount + 1);
     setArrayNeutralCard([...ArrayNeutralCard, neutralCount]);
-  };
+  }
 
   function handleClickDuplicateCard(index: number) {
     const duplicateCountAux = duplicateCount + 1;
@@ -107,19 +137,27 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
     } else if (duplicateCountAux >= 5) {
       setData((data) => data + 70);
     }
-  };
+  }
 
   function handleClickAddCard(card: number, index: number) {
-    setCardsArray([...cardsArray.slice(0, index), card, ...cardsArray.slice(index)]);
+    setCardsArray([
+      ...cardsArray.slice(0, index),
+      card,
+      ...cardsArray.slice(index),
+    ]);
     if (divineArray.includes(index)) {
       setData((data) => data + 20);
       setActiveDivine((activeDivine) => [...activeDivine, index + 1]);
       setDivineArray((divineArray) => [...divineArray, index + 1]);
     }
-  };
+  }
 
   function toggleDivineActive(index: number) {
-    setActiveDivine((activeDivine) => (activeDivine.includes(index) ? activeDivine.filter((i) => i !== index) : [...activeDivine, index]));
+    setActiveDivine((activeDivine) =>
+      activeDivine.includes(index)
+        ? activeDivine.filter((i) => i !== index)
+        : [...activeDivine, index]
+    );
   }
 
   function handleClickDivineCard(index: number) {
@@ -130,9 +168,8 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
     } else {
       setData((data) => data + 20);
       setDivineArray([...divineArray, index]);
-    };
-  };
-
+    }
+  }
 
   return (
     <div className="flex flex-col max-w-[24.1%] gap-y-2" ref={containerRef}>
@@ -176,8 +213,9 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
           </button>
           <div
             id="dropdown"
-            className={`z-10 ${open ? "absolute" : "hidden"
-              } bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44 `}
+            className={`z-10 ${
+              open ? "absolute" : "hidden"
+            } bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44 `}
             role="menu"
           >
             <ul
@@ -210,35 +248,62 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
         <div className="flex flex-row gap-0.5 flex-wrap">
           {/* las cartas basicas */}
           {character &&
-            cardsArray
-              .map((card, i) => {
-                if (arrayRemoveCard.includes(i)) {
-                  return null;
-                }
-                return (
-                  <div key={i} className="relative">
-                    <img
-                      src={`/character-chaos/${character}/${card + 1}.png`}
-                      alt={`${character} ${i + 1}`}
-                      className="w-20 "
+            cardsArray.map((card, i) => {
+              if (arrayRemoveCard.includes(i)) {
+                return null;
+              }
+              return (
+                <div key={i} className="relative">
+                  <img
+                    src={`/character-chaos/${character}/${card + 1}.png`}
+                    alt={`${character} ${i + 1}`}
+                    className="w-20 "
+                  ></img>
+                  <div className="text-[10px]">
+                    <button
+                      className="absolute w-16.5 h-4 rounded-3xl bottom-15 left-2 bg-blue-600 cursor-pointer"
+                      onClick={() => {
+                        handleClickDuplicateCard(i);
+                        handleClickAddCard(card, i);
+                      }}
                     >
-                    </img>
-                    <div className="text-[10px]">
-                      <button className="absolute w-16.5 h-4 rounded-3xl bottom-15 left-2 bg-blue-600 cursor-pointer"
-                        onClick={() => { handleClickDuplicateCard(i); handleClickAddCard(card, i); }}
-                      >Duplicar</button>
-                      <button className={`absolute w-16.5 h-4 rounded-3xl bottom-10.5 left-2 ${activeDivine.includes(i) ? 'bg-yellow-500' : 'bg-yellow-500/30 hover:bg-yellow-500/80'} cursor-pointer`}
-                        onClick={() => { toggleDivineActive(i); handleClickDivineCard(i); }}
-                      >Divina</button>
-                      <button className="absolute w-16.5 h-4 rounded-3xl bottom-6 left-2 bg-purple-600 cursor-pointer"
-                        onClick={() => { handleClickConvertCard(i); saveRemoveCard(i); }}
-                      >Convertir</button>
-                      <button className="absolute w-16.5 h-4 rounded-3xl bottom-1.5 left-2 bg-red-600 cursor-pointer justify-center flex items-center"
-                        onClick={() => { handleClickRemoveCard(); saveRemoveCard(i); }}
-                      >Remover</button>
-                    </div>
-                  </div>);
-              })}
+                      Duplicar
+                    </button>
+                    <button
+                      className={`absolute w-16.5 h-4 rounded-3xl bottom-10.5 left-2 ${
+                        activeDivine.includes(i)
+                          ? "bg-yellow-500"
+                          : "bg-yellow-500/30 hover:bg-yellow-500/80"
+                      } cursor-pointer`}
+                      onClick={() => {
+                        toggleDivineActive(i);
+                        handleClickDivineCard(i);
+                      }}
+                    >
+                      Divina
+                    </button>
+                    <button
+                      className="absolute w-16.5 h-4 rounded-3xl bottom-6 left-2 bg-purple-600 cursor-pointer"
+                      onClick={() => {
+                        handleClickConvertCard(i);
+                        saveRemoveCard(i);
+                      }}
+                    >
+                      Convertir
+                    </button>
+                    <button
+                      className="absolute w-16.5 h-4 rounded-3xl bottom-1.5 left-2 bg-red-600 cursor-pointer justify-center flex items-center"
+                      onClick={() => {
+                        handleClickRemoveCard();
+                        saveRemoveCard(i);
+                      }}
+                    >
+                      Remover
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           {/* las cartas neutrales */}
           <NeutralCalculate
             setNeutralCount={setNeutralCount}
@@ -252,15 +317,29 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
             setArrayNeutralCard={setArrayNeutralCard}
             setDuplicateCount={setDuplicateCount}
             duplicateCount={duplicateCount}
+            // ----
+            setNeutralDivineArray={setNeutralDivineArray}
+            setNeutralActiveDivine={setNeutralActiveDivine}
+            setNeutralEpiphanyArray={setNeutralEpiphanyArray}
+            setNeutralActiveEpiphany={setNeutralActiveEpiphany}
+            setMonsterArray={setMonsterArray}
+            setMonsterCount={setMonsterCount}
+            setForbidden={setForbidden}
+            setForbiddenCount={setForbiddenCount}
+            forbidden={forbidden}
+            forbiddenCount={forbiddenCount}
+            neutralDivineArray={neutralDivineArray}
+            neutralActiveDivine={neutralActiveDivine}
+            neutralEpiphanyArray={neutralEpiphanyArray}
+            neutralActiveEpiphany={neutralActiveEpiphany}
+            monsterArray={monsterArray}
+            monsterCount={monsterCount}
           />
-          
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 function elif(arg0: boolean) {
   throw new Error("Function not implemented.");
 }
-
-
