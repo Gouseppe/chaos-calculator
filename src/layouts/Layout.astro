@@ -24,14 +24,24 @@ import "../styles/global.css";
   </body>
 </html>
 
-<style>
+<style is:global>
   html,
   body {
     margin: 0;
     width: 100%;
     height: 100%;
+  }
+  html {
+    --font-size-tittle: 36px;
+    --font-size-subtittle: 24px;
+    --font-size-default: 16px;
+  }
+  body {
     background: linear-gradient(114deg, #000517 9.29%, #222 99.06%);
     background-attachment: fixed;
+  }
+  h1 {
+    font-size: var(--font-size-tittle);
   }
   * {
     color: white;
