@@ -8,7 +8,31 @@ type Props = {
   maxData: number;
 };
 
-const Characters = ["Amir", "Beryl", "Cassius", "Veronica"];
+const Characters = [
+  "Amir",
+  "Beryl",
+  "Cassius",
+  "Veronica",
+  "Haru",
+  "Hugo",
+  "Kayron",
+  "Khalipe",
+  "Lucas",
+  "Luke",
+  "Magma",
+  "Maribell",
+  "Mei Ling",
+  "Mika",
+  "Nia",
+  "Orlean",
+  "Owen",
+  "Rei",
+  "Renoa",
+  "Rin",
+  "Selena",
+  "Tressa",
+  "Yuki",
+];
 
 export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
   const {
@@ -172,26 +196,29 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
   }
 
   return (
-    <div className="flex flex-col max-w-[24.1%] gap-y-2" ref={containerRef}>
-      <div className="flex gap-2 max-w-full ">
-        <div className="inline-flex items-center rounded-3xl bg-[#1D1F2C]">
+    <div
+      className="min-w-[440px] flex-1 flex flex-col max-w-[33%] gap-y-2 p-2 bg-[#2c2c2c88] rounded-2xl"
+      ref={containerRef}
+    >
+      <div className="flex gap-2 max-w-full items-center">
+        <div className="inline-flex items-center rounded-xl bg-[#1D1F2C] relative">
           <button
             id="dropdownDefaultButton"
             aria-haspopup="menu"
             aria-expanded={open}
             aria-controls="dropdown"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex items-center justify-center text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none gap-1"
+            className="inline-flex items-center justify-center  text-white bg-brand box-border  shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5  gap-1 "
             type="button"
           >
             {character && (
               <img
                 className="w-12 h-12 rounded "
                 src={`/character-chaos/${character}/show.png`}
-                alt="algo"
+                alt="Character"
               />
             )}
-            {!character && <div className="w-4 h-4 rounded bg-white"></div>}
+            {!character && <div className="w-12 h-12 rounded bg-white"></div>}
             <span className="mr-2">{character || "escoje el personaje"}</span>
             <svg
               className="w-4 h-4 ms-1.5 -me-0.5"
@@ -215,11 +242,11 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
             id="dropdown"
             className={`z-10 ${
               open ? "absolute" : "hidden"
-            } bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44 `}
+            } bg-neutral-primary-medium  border-default-medium rounded-base shadow-lg w-44  top-18 overflow-auto max-h-[200px] border-0 rounded`}
             role="menu"
           >
             <ul
-              className="p-2 text-sm text-body font-medium bg-black"
+              className="p-2 text-sm text-body font-medium bg-black border-0"
               aria-labelledby="dropdownDefaultButton"
             >
               {Characters.map((char) => (
@@ -233,14 +260,25 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
                     role="menuitem"
                     className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                   >
-                    {char}
+                    <div className="flex gap-1 items-center">
+                      <img
+                        className="w-8 h-8 rounded text-base"
+                        src={`/character-chaos/${char}/show.png`}
+                        alt="Character"
+                      />
+                      <div>{char}</div>
+                    </div>
                   </button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
-        <div className="flex-1 rounded-3xl bg-green-400 justify-center flex items-center text-2xl">
+        <div
+          className={`h-max rounded-xl text-[#52B839] border-2 border-[#52B839] bg-[#1D1F2C] justify-center flex items-center text-2xl  w-max px-4 py-1 ${
+            data > maxData ? "text-red-600 border-red-600" : ""
+          } `}
+        >
           {data} / {maxData}
         </div>
       </div>
@@ -257,49 +295,51 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
                   <img
                     src={`/character-chaos/${character}/${card + 1}.png`}
                     alt={`${character} ${i + 1}`}
-                    className="w-20 "
+                    className="w-26 "
                   ></img>
-                  <div className="text-[10px]">
-                    <button
-                      className="absolute w-16.5 h-4 rounded-3xl bottom-15 left-2 bg-blue-600 cursor-pointer"
-                      onClick={() => {
-                        handleClickDuplicateCard(i);
-                        handleClickAddCard(card, i);
-                      }}
-                    >
-                      Duplicar
-                    </button>
-                    <button
-                      className={`absolute w-16.5 h-4 rounded-3xl bottom-10.5 left-2 ${
-                        activeDivine.includes(i)
-                          ? "bg-yellow-500"
-                          : "bg-yellow-500/30 hover:bg-yellow-500/80"
-                      } cursor-pointer`}
-                      onClick={() => {
-                        toggleDivineActive(i);
-                        handleClickDivineCard(i);
-                      }}
-                    >
-                      Divina
-                    </button>
-                    <button
-                      className="absolute w-16.5 h-4 rounded-3xl bottom-6 left-2 bg-purple-600 cursor-pointer"
-                      onClick={() => {
-                        handleClickConvertCard(i);
-                        saveRemoveCard(i);
-                      }}
-                    >
-                      Convertir
-                    </button>
-                    <button
-                      className="absolute w-16.5 h-4 rounded-3xl bottom-1.5 left-2 bg-red-600 cursor-pointer justify-center flex items-center"
-                      onClick={() => {
-                        handleClickRemoveCard();
-                        saveRemoveCard(i);
-                      }}
-                    >
-                      Remover
-                    </button>
+                  <div className="w-full text-[14px] absolute flex flex-col bottom-1 left-1/2 -translate-x-1/2 justify-center items-center ">
+                    <div className="flex flex-col w-max ">
+                      <button
+                        className="px-1 rounded-3xl  bg-blue-600 cursor-pointer"
+                        onClick={() => {
+                          handleClickDuplicateCard(i);
+                          handleClickAddCard(card, i);
+                        }}
+                      >
+                        Duplicar
+                      </button>
+                      <button
+                        className={`px-1 rounded-3xl  ${
+                          activeDivine.includes(i)
+                            ? "bg-yellow-500"
+                            : "bg-yellow-500/30 hover:bg-yellow-500/80"
+                        } cursor-pointer`}
+                        onClick={() => {
+                          toggleDivineActive(i);
+                          handleClickDivineCard(i);
+                        }}
+                      >
+                        Divina
+                      </button>
+                      <button
+                        className="px-1 rounded-3xl bg-purple-600 cursor-pointer"
+                        onClick={() => {
+                          handleClickConvertCard(i);
+                          saveRemoveCard(i);
+                        }}
+                      >
+                        Convertir
+                      </button>
+                      <button
+                        className=" rounded-3xl  bg-red-600 cursor-pointer justify-center flex items-center"
+                        onClick={() => {
+                          handleClickRemoveCard();
+                          saveRemoveCard(i);
+                        }}
+                      >
+                        Remover
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
@@ -340,6 +380,3 @@ export const CharacterData: React.FC<Props> = ({ maxData = 130 }) => {
     </div>
   );
 };
-function elif(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}

@@ -80,15 +80,13 @@ export const MainComponent = () => {
     container.scrollBy({ left: delta, behavior: "smooth" });
   };
   return (
-    <div className="flex w-dvw h-dvh flex-col relative">
-      <div className="flex flex-col justify-center items-center">
+    <div className="flex  h-dvh flex-col relative text-white">
+      <div className="flex flex-col justify-center items-center text-center">
         <h1>{IDIOMS[idioma].titulo}</h1>
-        <p>{IDIOMS[idioma].descripcion}</p>
-        <button>{IDIOMS[idioma].botonInicio}</button>
       </div>
       <div>
-        <div className="flex flex-row justify-center items-center  ">
-          <div>tier</div>
+        <div className="flex flex-row justify-center items-center   ">
+          <div className="text-(length:--font-size-tittle)">TIER</div>
 
           <button
             className="flex flex-row justify-center items-center rounded-[14px] hover:border-white border-2 border-[#151559] p-3 absolute right-2.5 transition hover:scale-105"
@@ -120,7 +118,7 @@ export const MainComponent = () => {
             onTouchEnd={onPointerUp}
             onWheel={handleWheel}
           >
-            {Array(14)
+            {Array(20)
               .fill(0)
               .map((_, index) => {
                 const isActive = activeIndex === index;
@@ -156,10 +154,12 @@ export const MainComponent = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-row">
-        <CharacterData maxData={data} />
-        <CharacterData maxData={data} />
-        <CharacterData maxData={data} />
+      <div className="flex flex-row w-full justify-center">
+        <div className="w-full max-w-[1400px] flex flex-row justify-center flex-wrap gap-4">
+          <CharacterData maxData={data} />
+          <CharacterData maxData={data} />
+          <CharacterData maxData={data} />
+        </div>
       </div>
     </div>
   );

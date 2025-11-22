@@ -278,63 +278,65 @@ export const NeutralCalculate = ({
         <div key={i} className="relative">
           <img
             src={`/character-chaos/Neutral/neutral${cardNeutral}.png`}
-            className="w-20"
+            className="w-26"
           />
-          <div className="text-[10px]">
-            <button
-              className={`absolute w-16.5 h-4 bg-blue-600 rounded-3xl bottom-20 left-2 cursor-pointer`}
-              onClick={() => {
-                handleClickDuplicateCardNeutral(i);
-                handleClickAddCardNeutral(cardNeutral, i);
-              }}
-            >
-              Duplicar
-            </button>
-            <button
-              className={`absolute w-16.5 h-4 rounded-3xl bottom-15.5 left-2 ${
-                neutralActiveEpiphany.includes(i)
-                  ? "bg-sky-300"
-                  : "bg-blue-300/30 hover:bg-sky-300/80"
-              } cursor-pointer`}
-              onClick={() => {
-                isDivine(i);
-                toggleEpiphanyActive(i);
-                handleClickEpiphanyCard(i);
-              }}
-            >
-              Epifania
-            </button>
-            <button
-              className={`absolute w-16.5 h-4 rounded-3xl bottom-11 left-2 ${
-                neutralActiveDivine.includes(i)
-                  ? "bg-yellow-500"
-                  : "bg-yellow-500/30 hover:bg-yellow-500/80"
-              } cursor-pointer`}
-              onClick={() => {
-                isEpiphany(i);
-                toggleDivineActive(i);
-                handleClickDivineCard(i);
-              }}
-            >
-              Divina
-            </button>
-            <button
-              className="absolute w-16.5 h-4 rounded-3xl bottom-6.5 left-2 bg-purple-600 cursor-pointer"
-              onClick={() => {
-                handleClickConvertCardNeutral(i);
-              }}
-            >
-              Convertir
-            </button>
-            <button
-              className="absolute w-16.5 h-4 rounded-3xl bottom-2 left-2 bg-red-600 cursor-pointer justify-center flex items-center"
-              onClick={() => {
-                handleClickRemoveCardNeutral();
-                deleteNeutralCard(i);
-              }}
-            >
-              Remover
-            </button>
+          <div className="w-full text-[14px] absolute flex flex-col bottom-1 left-1/2 -translate-x-1/2 justify-center items-center ">
+            <div className="flex flex-col w-max gap-1">
+              <button
+                className={` bg-blue-600 rounded-3xl bottom-20 left-2 cursor-pointer px-1`}
+                onClick={() => {
+                  handleClickDuplicateCardNeutral(i);
+                  handleClickAddCardNeutral(cardNeutral, i);
+                }}
+              >
+                Duplicar
+              </button>
+              <button
+                className={` rounded-3xl bottom-15.5 left-2 ${
+                  neutralActiveEpiphany.includes(i)
+                    ? "bg-sky-300"
+                    : "bg-blue-300/30 hover:bg-sky-300/80"
+                } cursor-pointer px-1`}
+                onClick={() => {
+                  isDivine(i);
+                  toggleEpiphanyActive(i);
+                  handleClickEpiphanyCard(i);
+                }}
+              >
+                Epifania
+              </button>
+              <button
+                className={`px-1 rounded-3xl bottom-11 left-2 ${
+                  neutralActiveDivine.includes(i)
+                    ? "bg-yellow-500"
+                    : "bg-yellow-500/30 hover:bg-yellow-500/80"
+                } cursor-pointer`}
+                onClick={() => {
+                  isEpiphany(i);
+                  toggleDivineActive(i);
+                  handleClickDivineCard(i);
+                }}
+              >
+                Divina
+              </button>
+              <button
+                className=" rounded-3xl  bg-purple-600 cursor-pointer px-1"
+                onClick={() => {
+                  handleClickConvertCardNeutral(i);
+                }}
+              >
+                Convertir
+              </button>
+              <button
+                className=" rounded-3xl bg-red-600 cursor-pointer justify-center flex items-center px-1"
+                onClick={() => {
+                  handleClickRemoveCardNeutral();
+                  deleteNeutralCard(i);
+                }}
+              >
+                Remover
+              </button>
+            </div>
           </div>
         </div>
       ))}
@@ -342,18 +344,20 @@ export const NeutralCalculate = ({
         <div key={i} className="relative">
           <img
             src={`/character-chaos/Monster/${cardMonster}.png`}
-            className="w-20"
+            className="w-26"
           />
-          <div className="text-[10px]">
-            <button
-              className="absolute w-16.5 h-4 rounded-3xl bottom-2 left-2 bg-red-600 cursor-pointer justify-center flex items-center"
-              onClick={() => {
-                handleClickRemoveCardMonster();
-                deleteMonsterCard(i);
-              }}
-            >
-              Remover
-            </button>
+          <div className="w-full text-[14px] absolute flex flex-col bottom-1 left-1/2 -translate-x-1/2 justify-center items-center ">
+            <div className="flex flex-col w-max ">
+              <button
+                className=" rounded-3xl bg-red-600 cursor-pointer justify-center flex items-center px-1"
+                onClick={() => {
+                  handleClickRemoveCardMonster();
+                  deleteMonsterCard(i);
+                }}
+              >
+                Remover
+              </button>
+            </div>
           </div>
         </div>
       ))}
@@ -361,18 +365,20 @@ export const NeutralCalculate = ({
         <div key={i} className="relative">
           <img
             src={`/character-chaos/Forbidden/${cardForbidden}.png`}
-            className="w-20"
+            className="w-26"
           />
-          <div className="text-[10px]">
-            <button
-              className="absolute w-16.5 h-4 rounded-3xl bottom-2 left-2 bg-red-600 cursor-pointer justify-center flex items-center"
-              onClick={() => {
-                handleClickRemoveCardForbidden();
-                deleteForbiddenCard(i);
-              }}
-            >
-              Remover
-            </button>
+          <div className="w-full text-[14px] absolute flex flex-col bottom-1 left-1/2 -translate-x-1/2 justify-center items-center ">
+            <div className="flex flex-col w-max ">
+              <button
+                className=" rounded-3xl  bg-red-600 cursor-pointer px-1"
+                onClick={() => {
+                  handleClickRemoveCardForbidden();
+                  deleteForbiddenCard(i);
+                }}
+              >
+                Remover
+              </button>
+            </div>
           </div>
         </div>
       ))}
@@ -381,27 +387,30 @@ export const NeutralCalculate = ({
         <div className="relative">
           <img
             src={"/character-chaos/Neutral/agregarNeutral.png"}
-            className="w-20 cursor-pointer hover:scale-105 transition-transform duration-200"
+            className="w-26 cursor-pointer hover:scale-105 transition-transform duration-200"
           />
-          <div className="text-[10px]">
-            <button
-              className="absolute w-16.5 h-4 bg-blue-600 rounded-3xl bottom-11 left-2 cursor-pointer"
-              onClick={() => handleClickForbiddenCard(forbiddenCount)}
-            >
-              Forbidden
-            </button>
-            <button
-              className="absolute w-16.5 h-4 bg-purple-600 rounded-3xl bottom-6.5 left-2 cursor-pointer"
-              onClick={() => handleClickMonsterCard(monsterCount)}
-            >
-              Monster
-            </button>
-            <button
-              className="absolute w-16.5 h-4 bg-green-600 rounded-3xl bottom-2 left-2 cursor-pointer"
-              onClick={() => handleClickNeutralCard(neutralCount)}
-            >
-              Neutral
-            </button>
+
+          <div className="w-full text-[14px] absolute flex flex-col bottom-1 left-1/2 -translate-x-1/2 justify-center items-center ">
+            <div className="flex flex-col w-max gap-0.5">
+              <button
+                className=" bg-blue-600 rounded-3xl  cursor-pointer px-1"
+                onClick={() => handleClickForbiddenCard(forbiddenCount)}
+              >
+                Forbidden
+              </button>
+              <button
+                className=" bg-purple-600 rounded-3xl cursor-pointer"
+                onClick={() => handleClickMonsterCard(monsterCount)}
+              >
+                Monster
+              </button>
+              <button
+                className=" bg-green-600 rounded-3xl cursor-pointer"
+                onClick={() => handleClickNeutralCard(neutralCount)}
+              >
+                Neutral
+              </button>
+            </div>
           </div>
         </div>
       )}

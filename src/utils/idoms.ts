@@ -1,6 +1,6 @@
 export const IDIOMS = {
   spanish: {
-    titulo: "Bienvenido a Nuestra Aplicación",
+    titulo: "Chaos Calculator",
     descripcion:
       "Esta es una aplicación de ejemplo para demostrar la internacionalización.",
     botonInicio: "Comenzar",
